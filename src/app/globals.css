@@ -1,26 +1,181 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #1c1c1c;
+  --foreground: #f5e8d8;
+
+  --color-bg: #1c1c1c;
+  --color-text: #f5e8d8;
+  --color-accent: #ff6f61;
+  --color-accent-2: #492626;
+  --color-accent-300: color-mix(in srgb, #ff6f61 70%, white);
+  --color-text-stats: var(--color-text);
+  --color-section: color-mix(in srgb, #1c1c1c 99%, white 1%);
+  --color-section-glow: color-mix(in srgb, var(--color-section) 72%, #616161 18%);
+  --color-surface: color-mix(in srgb, #1c1c1c 88%, white 12%);
+  --radius-md: 16px;
+  --shadow-md: 0 20px 40px -20px rgba(0, 0, 0, 0.55);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-accent: var(--color-accent);
+  --color-accent-2: var(--color-accent-2);
+  --color-accent-300: var(--color-accent-300);
+  --color-text-stats: var(--color-text-stats);
+  --color-surface: var(--color-surface);
+  --color-section: var(--color-section);
+  --color-section-glow: var(--color-section-glow);
+  --font-sans: var(--font-inter);
+  --font-heading: var(--font-inter);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  body {
+    background: var(--background);
+    color: var(--foreground);
+  }
+
+  a {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: var(--color-accent-300);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  font-weight: 500;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-primary {
+  background: var(--color-accent);
+  color: var(--color-bg);
+}
+
+.btn-primary:hover {
+  background: var(--color-accent-300);
+  color: var(--color-bg);
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 1px solid color-mix(in srgb, var(--color-text) 22%, transparent);
+  color: var(--color-text);
+}
+
+.btn-secondary:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent-300);
+}
+
+.card {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+}
+
+.elev-sm {
+  box-shadow: 0 10px 24px -16px rgba(0, 0, 0, 0.5);
+}
+
+.card-kicker {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--color-text) 55%, transparent);
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 4px 11px;
+  font-size: 12px;
+}
+
+.tag-neutral {
+  background: color-mix(in srgb, var(--color-text) 8%, transparent);
+  color: color-mix(in srgb, var(--color-text) 82%, transparent);
+}
+
+.hr {
+  height: 1px;
+  background: color-mix(in srgb, var(--color-text) 10%, transparent);
+}
+
+h6 {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+@keyframes noc-rise {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes noc-drift {
+  0% {
+    transform: translate3d(-4%, -2%, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(6%, 4%, 0) scale(1.12);
+  }
+  100% {
+    transform: translate3d(-4%, -2%, 0) scale(1);
+  }
+}
+
+@keyframes noc-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@keyframes noc-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(7px);
+  }
+}
+
+@keyframes noc-line {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes noc-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }

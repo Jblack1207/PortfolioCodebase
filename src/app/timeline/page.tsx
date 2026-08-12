@@ -1,0 +1,19 @@
+import type { Metadata } from "next";
+import Navbar from "@/components/Navbar";
+import Timeline from "@/components/Timeline";
+import Footer from "@/components/Footer";
+
+export const metadata: Metadata = {
+  title: "Timeline — Joel Blackham",
+  description: "Joel Blackham's educational and industry timeline.",
+};
+
+export default function TimelinePage() {
+  return (
+    <div className="relative flex flex-1 flex-col overflow-x-hidden">
+      <Navbar />
+      <Timeline />
+      <Footer />
+    </div>
+  );
+}
