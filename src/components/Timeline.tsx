@@ -63,7 +63,7 @@ const events: TimelineEvent[] = [
 ];
 
 const typeMeta: Record<EventType, { label: string; color: string }> = {
-  education: { label: "Education", color: "var(--color-accent-2)" },
+  education: { label: "Education", color: "color-mix(in srgb, var(--color-accent-2) 55%, white)" },
   work: { label: "Experience", color: "var(--color-accent)" },
   project: { label: "Project", color: "color-mix(in srgb, var(--color-text) 55%, transparent)" },
 };

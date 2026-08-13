@@ -108,6 +108,10 @@ export default function Skills() {
         <h2 className="m-0 max-w-[24ch] text-[30px] tracking-tight text-foreground sm:text-[44px]">
           What i&apos;ve used, and what i&apos;m currently using.
         </h2>
+        <p className="mt-3 max-w-[52ch] text-sm text-foreground/50">
+          Percentages reflect my own self-assessed comfort level with each
+          technology, not a formal or standardised measure.
+        </p>
       </motion.div>
 
       <SkillRow title="Currently using in projects" items={currentlyUsing} />

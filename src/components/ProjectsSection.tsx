@@ -47,7 +47,7 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
       whileInView={{ opacity: 1 }}
       viewport={{ once: false, margin: "-45% 0px -45% 0px" }}
       transition={{ duration: 0.6 }}
-      className="mx-auto max-w-295 scroll-mt-20 px-6 pt-10 pb-8 sm:px-12 sm:pt-14 sm:pb-10"
+      className="mx-auto max-w-295 scroll-mt-20 px-6 pt-10 pb-8 sm:px-12 sm:pt-14 sm:pb-26"
     >
       <div className="mb-14 flex flex-wrap items-end justify-between gap-6">
         <div>
@@ -177,7 +177,7 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
           ))}
         </div>
       )}
-      <div className="-mt-8 flex justify-center gap-2.5">
+      <div className="-mt-0 flex justify-center gap-2.5">
       <SectionArrow href="#skills" label="Jump to skills" />
       </div>
     </motion.section>
