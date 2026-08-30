@@ -31,7 +31,45 @@
   --font-heading: var(--font-inter);
 }
 
+/*
+ * Shared type scale. Every heading/body/caption size in the app should
+ * come from one of these tokens instead of a one-off text-[Npx] value,
+ * so the same visual role reads at the same size everywhere it appears.
+ * Ordered smallest to largest; "-lg"/"-md" variants are the sm+/lg+ step
+ * for sizes that grow at a breakpoint.
+ */
+@theme {
+  --text-caption: 0.6875rem; /* 11px — mono image-placeholder captions, tiny numeric labels */
+  --text-meta: 0.8125rem; /* 13px — secondary caption line under a heading/title */
+  --text-body: 0.9375rem; /* 15px — paragraph/description copy */
+  --text-h3: 1.25rem; /* 20px — compact card title */
+  --text-h3-lg: 1.5rem; /* 24px — compact card title, sm+ */
+  --text-h3-feature: 1.75rem; /* 28px — single-item feature card title */
+  --text-h2: 1.875rem; /* 30px — section heading */
+  --text-h2-lg: 2.75rem; /* 44px — section heading, sm+ */
+  --text-h1: 2.25rem; /* 36px — page heading */
+  --text-h1-lg: 3.25rem; /* 52px — page heading, sm+ */
+  --text-display: 2.875rem; /* 46px — homepage hero */
+  --text-display-md: 4.25rem; /* 68px — homepage hero, sm+ */
+  --text-display-lg: 5.5rem; /* 88px — homepage hero, lg+ */
+  --text-stat: 2.5rem; /* 40px — large stat number */
+}
+
 @layer base {
+  html {
+    scrollbar-gutter: stable;
+  }
+
+  /* Added by ScrollSnap.tsx while the home page is mounted. */
+  html.home-snap {
+    scroll-snap-type: y mandatory;
+  }
+
+  .snap-section {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
   body {
     background: var(--background);
     color: var(--foreground);
@@ -91,6 +129,14 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: color-mix(in srgb, var(--color-text) 55%, transparent);
+}
+
+.caption-mono {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--color-text) 45%, transparent);
 }
 
 .tag {

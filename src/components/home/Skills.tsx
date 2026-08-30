@@ -3,13 +3,13 @@
 import { motion, type Variants } from "framer-motion";
 
 const currentlyUsing = [
-  { name: "C#", level: 0 },
-  { name: "Next.js", level: 50 },
+  { name: "C#", level: 10 },
+  { name: "Next.js", level: 40 },
   { name: "TypeScript", level: 55 },
   { name: "React", level: 45 },
-  { name: "Tailwind", level: 45 },
-  { name: "PostgreSQL", level: 45 },
-  { name: "Node.js", level: 55 },
+  { name: "Tailwind", level: 35 },
+  { name: "PostgreSQL", level: 35 },
+  { name: "Node.js", level: 50 },
 
 ];
 
@@ -72,7 +72,7 @@ function SkillRow({ title, items }: { title: string; items: { name: string; leve
           <motion.div key={item.name} variants={cardVariants} className="card elev-sm p-3.5">
             <div className="mb-1.5 flex items-baseline justify-between">
               <span className="text-sm text-foreground/82">{item.name}</span>
-              <span className="text-[11px] text-foreground/40">{item.level}%</span>
+              <span className="text-caption text-foreground/40">{item.level}%</span>
             </div>
             <motion.div
               variants={barTrackVariants}
@@ -101,11 +101,11 @@ export default function Skills() {
       whileInView="visible"
       viewport={{ once: false, margin: "-25% 0px -45% 0px" }}
       variants={staggerContainer}
-      className="mx-auto max-w-295 scroll-mt-20 px-6 pt-10 pb-8 sm:px-12 sm:pt-14 sm:pb-10"
+      className="snap-section mx-auto flex min-h-screen max-w-295 flex-col justify-center px-6 py-10 sm:px-12"
     >
       <motion.div variants={fadeUp} className="mb-2">
         <h6 className="mb-3.5 text-accent">Stack</h6>
-        <h2 className="m-0 max-w-[24ch] text-[30px] tracking-tight text-foreground sm:text-[44px]">
+        <h2 className="m-0 max-w-[24ch] text-h2 tracking-tight text-foreground sm:text-h2-lg">
           What i&apos;ve used, and what i&apos;m currently using.
         </h2>
         <p className="mt-3 max-w-[52ch] text-sm text-foreground/50">

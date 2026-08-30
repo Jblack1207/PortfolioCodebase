@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Navbar from "@/components/Navbar";
-import Timeline from "@/components/Timeline";
-import Footer from "@/components/Footer";
+import Navbar from "@/components/shared/Navbar";
+import Timeline from "@/components/timeline/Timeline";
+import Footer from "@/components/shared/Footer";
 
 export const metadata: Metadata = {
   title: "Timeline — Joel Blackham",
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function TimelinePage() {
   return (
-    <div className="relative flex flex-1 flex-col overflow-x-hidden">
+    <div className="relative flex flex-1 flex-col overflow-x-clip">
       <Navbar />
       <Timeline />
       <Footer />

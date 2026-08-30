@@ -5,7 +5,6 @@ import Link from "next/link";
 import { motion, AnimatePresence, type PanInfo } from "framer-motion";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import type { Project } from "@/generated/prisma/client";
-import SectionArrow from "@/components/SectionArrow";
 
 const slideVariants = {
   enter: (direction: number) => ({
@@ -47,12 +46,12 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
       whileInView={{ opacity: 1 }}
       viewport={{ once: false, margin: "-45% 0px -45% 0px" }}
       transition={{ duration: 0.6 }}
-      className="mx-auto max-w-295 scroll-mt-20 px-6 pt-10 pb-8 sm:px-12 sm:pt-14 sm:pb-26"
+      className="snap-section mx-auto flex min-h-screen max-w-295 flex-col justify-center px-6 py-10 sm:px-12"
     >
       <div className="mb-14 flex flex-wrap items-end justify-between gap-6">
         <div>
           <h6 className="mb-3.5 text-accent">Selected work</h6>
-          <h2 className="m-0 max-w-[22ch] text-[30px] tracking-tight text-foreground sm:text-[44px]">
+          <h2 className="m-0 max-w-[22ch] text-h2 tracking-tight text-foreground sm:text-h2-lg">
             {projects.length === 1 ? "One project" : `${projects.length} projects`}, written up properly.
           </h2>
         </div>
@@ -109,25 +108,23 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
                     "repeating-linear-gradient(135deg, rgba(233,233,237,0.055) 0 10px, transparent 10px 20px)",
                 }}
               >
-                <span className="font-mono text-[11px] tracking-[0.14em] text-foreground/45 uppercase">
-                  {project.title} — screenshot
-                </span>
+                <span className="caption-mono">{project.title} — screenshot</span>
               </div>
             </div>
 
             <div>
               <div className="card-kicker mb-3">{project.category}</div>
-              <h3 className="m-0 mb-1.5 text-[28px] tracking-[-0.02em] text-foreground">
+              <h3 className="m-0 mb-1.5 text-h3-feature tracking-[-0.02em] text-foreground">
                 {project.title}
               </h3>
               <div
                 className="mb-4.5 h-0.5 w-14 origin-left bg-accent-2"
                 style={{ animation: "noc-line 0.8s cubic-bezier(.2,.7,.3,1) both" }}
               />
-              <p className="m-0 mb-4 text-[15px] leading-[1.65] text-foreground/74">
+              <p className="m-0 mb-4 text-body leading-[1.65] text-foreground/74">
                 {project.shortDescription}
               </p>
-              <p className="m-0 mb-5 text-[13px] leading-[1.6] text-foreground/55">
+              <p className="m-0 mb-5 text-meta leading-[1.6] text-foreground/55">
                 Solo developer — university project
               </p>
               <div className="mb-6 flex flex-wrap gap-1.5">
@@ -177,9 +174,6 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
           ))}
         </div>
       )}
-      <div className="-mt-0 flex justify-center gap-2.5">
-      <SectionArrow href="#skills" label="Jump to skills" />
-      </div>
     </motion.section>
   );
 }

@@ -2,8 +2,8 @@
 
 import { useRef } from "react";
 import { useInView } from "framer-motion";
-import Stats from "@/components/Stats";
-import About from "@/components/About";
+import Stats from "@/components/home/Stats";
+import About from "@/components/home/About";
 
 export default function IntroGroup({ projectCount }: { projectCount: number }) {
   const ref = useRef<HTMLDivElement>(null);

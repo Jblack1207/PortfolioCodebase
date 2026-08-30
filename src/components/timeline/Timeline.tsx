@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { motion, type Variants } from "framer-motion";
 
 type EventType = "education" | "work" | "project";
@@ -68,17 +69,27 @@ const typeMeta: Record<EventType, { label: string; color: string }> = {
   project: { label: "Project", color: "color-mix(in srgb, var(--color-text) 55%, transparent)" },
 };
 
-const staggerContainer: Variants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.12 } },
-};
-
-const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 28 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.7 } },
-};
+const fadeIn = (fromLeft: boolean): Variants => ({
+  hidden: { opacity: 0, x: fromLeft ? -24 : 24 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: "easeOut" } },
+});
 
 export default function Timeline() {
+  useEffect(() => {
+    // Next's own post-navigation scroll correction can land in the wrong
+    // place on this page (see the mandatory scroll-snap setup on the home
+    // page) and it runs after this effect, so reassert on the next frame
+    // and shortly after to win that race.
+    const reset = () => window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    reset();
+    const raf = requestAnimationFrame(reset);
+    const timeout = setTimeout(reset, 100);
+    return () => {
+      cancelAnimationFrame(raf);
+      clearTimeout(timeout);
+    };
+  }, []);
+
   return (
     <section className="mx-auto max-w-295 scroll-mt-20 px-6 pt-32 pb-24 sm:px-12">
       <motion.div
@@ -86,10 +97,10 @@ export default function Timeline() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: false, amount: 0.3 }}
         transition={{ duration: 0.7 }}
-        className="mb-16 max-w-[60ch]"
+        className="mb-20 max-w-[60ch]"
       >
         <h6 className="mb-3.5 text-accent">My journey</h6>
-        <h1 className="m-0 mb-5 text-[36px] leading-[1.05] tracking-tight text-foreground sm:text-[52px]">
+        <h1 className="m-0 mb-5 text-h1 leading-[1.05] tracking-tight text-foreground sm:text-h1-lg">
           Education, experience, and everything in between.
         </h1>
         <p className="m-0 text-lg leading-[1.6] text-foreground/70">
@@ -99,54 +110,64 @@ export default function Timeline() {
         </p>
       </motion.div>
 
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: false, amount: 0.15 }}
-        variants={staggerContainer}
-      >
+      <div className="relative">
+        <motion.div
+          initial={{ scaleY: 0 }}
+          whileInView={{ scaleY: 1 }}
+          viewport={{ once: true, amount: 0 }}
+          transition={{ duration: 1.1, ease: "easeOut" }}
+          className="absolute top-1 bottom-1 left-5 w-px origin-top sm:left-1/2 sm:-translate-x-1/2"
+          style={{ background: "color-mix(in srgb, var(--color-text) 16%, transparent)" }}
+        />
+
         {events.map((event, i) => {
           const meta = typeMeta[event.type];
+          const isLeft = i % 2 === 0;
           return (
-            <motion.div key={event.title} variants={fadeUp} className="relative flex gap-6 pb-14 last:pb-0">
-              <div className="relative flex w-3 flex-none flex-col items-center">
+            <div
+              key={event.title}
+              className="relative mb-12 grid grid-cols-[2.5rem_1fr] gap-x-4 last:mb-0 sm:mb-16 sm:grid-cols-[1fr_2.5rem_1fr] sm:gap-x-8"
+            >
+              <div className="col-start-1 flex justify-center pt-1.5 sm:col-start-2">
                 <span
-                  className="z-10 mt-2 h-3 w-3 shrink-0 rounded-full"
-                  style={{ background: meta.color }}
+                  className="z-10 h-3.5 w-3.5 rounded-full"
+                  style={{ background: meta.color, boxShadow: `0 0 0 5px color-mix(in srgb, ${meta.color} 18%, var(--color-bg))` }}
                 />
-                {i < events.length - 1 && (
-                  <span
-                    className="mt-1 w-px flex-1"
-                    style={{ background: "color-mix(in srgb, var(--color-text) 15%, transparent)" }}
-                  />
-                )}
               </div>
 
-              <div className="card elev-sm flex-1 p-6 sm:p-7">
-                <div className="mb-2 flex flex-wrap items-center gap-2.5">
-                  <span
-                    className="tag"
-                    style={{
-                      background: "color-mix(in srgb, " + meta.color + " 16%, transparent)",
-                      color: meta.color,
-                    }}
-                  >
-                    {meta.label}
-                  </span>
-                  <span className="card-kicker">{event.period}</span>
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: false, amount: 0.4 }}
+                variants={fadeIn(isLeft)}
+                className={`col-start-2 row-start-1 ${isLeft ? "sm:col-start-1" : "sm:col-start-3"}`}
+              >
+                <div className="card elev-sm p-6 transition-transform duration-300 hover:-translate-y-1 sm:p-7">
+                  <div className="mb-2 flex flex-wrap items-center gap-2.5">
+                    <span
+                      className="tag"
+                      style={{
+                        background: "color-mix(in srgb, " + meta.color + " 16%, transparent)",
+                        color: meta.color,
+                      }}
+                    >
+                      {meta.label}
+                    </span>
+                    <span className="card-kicker">{event.period}</span>
+                  </div>
+                  <h3 className="m-0 mb-1 text-h3 tracking-tight text-foreground sm:text-h3-lg">
+                    {event.title}
+                  </h3>
+                  <div className="mb-3 text-meta text-foreground/60">{event.org}</div>
+                  <p className="m-0 text-body leading-[1.65] text-foreground/74">
+                    {event.description}
+                  </p>
                 </div>
-                <h3 className="m-0 mb-1 text-[22px] tracking-tight text-foreground sm:text-[26px]">
-                  {event.title}
-                </h3>
-                <div className="mb-3 text-sm text-foreground/60">{event.org}</div>
-                <p className="m-0 max-w-[62ch] text-[15px] leading-[1.65] text-foreground/74">
-                  {event.description}
-                </p>
-              </div>
-            </motion.div>
+              </motion.div>
+            </div>
           );
         })}
-      </motion.div>
+      </div>
     </section>
   );
 }

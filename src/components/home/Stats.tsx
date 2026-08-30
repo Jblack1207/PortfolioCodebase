@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-// import SectionArrow from "@/components/SectionArrow";
 
 const stats = (projectCount: number) => [
   { value: "TODO yrs", label: "writing software" },
@@ -33,10 +32,10 @@ export default function Stats({
       >
         {stats(projectCount).map((stat) => (
           <div key={stat.label}>
-            <div className="font-heading text-[40px] leading-none tracking-[-0.03em] text-text-stats">
+            <div className="font-heading text-stat leading-none tracking-[-0.03em] text-text-stats">
               {stat.value}
             </div>
-            <div className="mt-2 text-[13px] text-text-stats/70">{stat.label}</div>
+            <div className="mt-2 text-meta text-text-stats/70">{stat.label}</div>
           </div>
         ))}
       </motion.div>

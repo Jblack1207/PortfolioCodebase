@@ -1,12 +1,13 @@
 import { prisma } from "@/lib/prisma";
-import Navbar from "@/components/Navbar";
-import Hero from "@/components/Hero";
-import IntroGroup from "@/components/IntroGroup";
-import ProjectsSection from "@/components/ProjectsSection";
-import Skills from "@/components/Skills";
-import Marquee from "@/components/Marquee";
-import Footer from "@/components/Footer";
-import ScrollProgress from "@/components/ScrollProgress";
+import Navbar from "@/components/shared/Navbar";
+import Hero from "@/components/home/Hero";
+import IntroGroup from "@/components/home/IntroGroup";
+import ProjectsSection from "@/components/home/ProjectsSection";
+import Skills from "@/components/home/Skills";
+import Marquee from "@/components/home/Marquee";
+import Footer from "@/components/shared/Footer";
+import ScrollProgress from "@/components/home/ScrollProgress";
+import ScrollSnap from "@/components/home/ScrollSnap";
 
 export default async function Home() {
   const projects = await prisma.project.findMany({
@@ -14,10 +15,13 @@ export default async function Home() {
   });
 
   return (
-    <div className="relative flex flex-1 flex-col overflow-x-hidden">
+    <div className="relative flex flex-1 flex-col overflow-x-clip">
       <ScrollProgress />
-      <Navbar />
-      <Hero />
+      <ScrollSnap />
+      <div className="snap-section">
+        <Navbar />
+        <Hero />
+      </div>
       <IntroGroup projectCount={projects.length} />
       <ProjectsSection projects={projects} />
       <Marquee />

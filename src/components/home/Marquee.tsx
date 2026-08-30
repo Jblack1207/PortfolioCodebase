@@ -67,7 +67,8 @@ export default function Marquee() {
   return (
     <div
       ref={containerRef}
-      className="mt-8 overflow-hidden border-y py-4.5"
+      id="marquee"
+      className="snap-section mt-8 overflow-hidden border-y py-4.5"
       style={{
         borderColor: "color-mix(in srgb, var(--color-text) 8%, transparent)",
         maskImage:
@@ -77,13 +78,13 @@ export default function Marquee() {
       <div
         ref={measureRef}
         aria-hidden
-        className="font-heading pointer-events-none invisible absolute flex w-max gap-10 text-[15px] tracking-[0.06em] uppercase"
+        className="font-heading pointer-events-none invisible absolute flex w-max gap-10 text-body tracking-[0.06em] uppercase"
       >
         <TechSet copyIndex={0} />
       </div>
 
       <motion.div
-        className="font-heading flex w-max gap-10 text-[15px] tracking-[0.06em] text-foreground/40 uppercase"
+        className="font-heading flex w-max gap-10 text-body tracking-[0.06em] text-foreground/40 uppercase"
         style={{ x }}
       >
         {Array.from({ length: copies }).map((_, i) => (
