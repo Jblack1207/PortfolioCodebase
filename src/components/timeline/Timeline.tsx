@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
 import { motion, type Variants } from "framer-motion";
+import ScrollToTop from "@/components/shared/ScrollToTop";
 
 type EventType = "education" | "work" | "project";
 
@@ -19,7 +19,7 @@ const events: TimelineEvent[] = [
     title: "A Levels",
     org: "Dudley Sixth",
     type: "education",
-    description: "1 BTEC & 2 A Levels.",
+    description: "Achieved 1 BTEC & 2 A Levels during my 2 years at Dudley Sixth, including A Levels in Computer Science, Business, and a BTEC in IT.",
   },
   {
     period: "Feb 2020 — Jun 2024",
@@ -27,7 +27,7 @@ const events: TimelineEvent[] = [
     org: "Iceland Foods PLC",
     type: "work",
     description:
-      "Worked part-time alongside my studies within customer service and home delivery operations — coordinating customer orders and delivery schedules, resolving logistical issues, and developing organisational, problem-solving and teamwork skills in a fast-paced environment.",
+      "Worked part-time alongside my studies within customer service and home delivery operations, coordinating customer orders and delivery schedules, resolving logistical issues, and developing organisational, problem-solving and teamwork skills in a fast-paced environment.",
   },
   {
     period: "2021 — 2026",
@@ -75,23 +75,9 @@ const fadeIn = (fromLeft: boolean): Variants => ({
 });
 
 export default function Timeline() {
-  useEffect(() => {
-    // Next's own post-navigation scroll correction can land in the wrong
-    // place on this page (see the mandatory scroll-snap setup on the home
-    // page) and it runs after this effect, so reassert on the next frame
-    // and shortly after to win that race.
-    const reset = () => window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-    reset();
-    const raf = requestAnimationFrame(reset);
-    const timeout = setTimeout(reset, 100);
-    return () => {
-      cancelAnimationFrame(raf);
-      clearTimeout(timeout);
-    };
-  }, []);
-
   return (
     <section className="mx-auto max-w-295 scroll-mt-20 px-6 pt-32 pb-24 sm:px-12">
+      <ScrollToTop />
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -101,12 +87,10 @@ export default function Timeline() {
       >
         <h6 className="mb-3.5 text-accent">My journey</h6>
         <h1 className="m-0 mb-5 text-h1 leading-[1.05] tracking-tight text-foreground sm:text-h1-lg">
-          Education, experience, and everything in between.
+          My experiences so far.
         </h1>
         <p className="m-0 text-lg leading-[1.6] text-foreground/70">
-          From A Levels to a First-Class Computer Science degree, alongside
-          real commercial QA experience and the projects I built along the
-          way.
+          The below timeline depicts my current educational and industrial journey, including previous and current education, projects that have been completed during and after those educational periods, and my previous and current work experiences.
         </p>
       </motion.div>
 

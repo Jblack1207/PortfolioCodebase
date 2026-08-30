@@ -16,6 +16,11 @@ const pages = [
   { href: "/timeline", label: "Timeline" },
 ];
 
+const projects = [
+  { href: "/projects/black-country-beats", label: "Black Country Beats" },
+  { href: "/projects/healthguard-pro", label: "HealthGuard Pro" },
+];
+
 export default function Footer() {
   return (
     <footer
@@ -41,6 +46,19 @@ export default function Footer() {
             <div className="card-kicker mb-3">Pages</div>
             <ul className="flex flex-col gap-2 text-sm">
               {pages.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="text-foreground/70 hover:text-accent">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <div className="card-kicker mb-3">Projects</div>
+            <ul className="flex flex-col gap-2 text-sm">
+              {projects.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className="text-foreground/70 hover:text-accent">
                     {link.label}

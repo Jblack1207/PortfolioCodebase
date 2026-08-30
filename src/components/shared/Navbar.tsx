@@ -3,7 +3,14 @@ import Link from "next/link";
 const links: { href: string; label: string; pages?: { href: string; label: string }[] }[] = [
   { href: "/#top", label: "Home" },
   { href: "/#about", label: "About", pages: [{ href: "/timeline", label: "Timeline" }] },
-  { href: "/#work", label: "Work" },
+  {
+    href: "/#work",
+    label: "Work",
+    pages: [
+      { href: "/projects/black-country-beats", label: "Black Country Beats" },
+      { href: "/projects/healthguard-pro", label: "HealthGuard Pro" },
+    ],
+  },
   { href: "/#marquee", label: "Skills" },
 ];
 
