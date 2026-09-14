@@ -15,14 +15,14 @@ type TimelineEvent = {
 
 const events: TimelineEvent[] = [
   {
-    period: "2019 — 2021",
+    period: "2019 to 2021",
     title: "A Levels",
     org: "Dudley Sixth",
     type: "education",
     description: "Achieved 1 BTEC & 2 A Levels during my 2 years at Dudley Sixth, including A Levels in Computer Science, Business, and a BTEC in IT.",
   },
   {
-    period: "Feb 2020 — Jun 2024",
+    period: "Feb 2020 to Jun 2024",
     title: "Sales Assistant / Delivery Coordinator",
     org: "Iceland Foods PLC",
     type: "work",
@@ -30,7 +30,7 @@ const events: TimelineEvent[] = [
       "Worked part-time alongside my studies within customer service and home delivery operations, coordinating customer orders and delivery schedules, resolving logistical issues, and developing organisational, problem-solving and teamwork skills in a fast-paced environment.",
   },
   {
-    period: "2021 — 2026",
+    period: "2021 to 2026",
     title: "BSc (Hons) Computer Science, w/ Placement Year",
     org: "Birmingham City University · First Class Honours",
     type: "education",
@@ -43,15 +43,15 @@ const events: TimelineEvent[] = [
     org: "Flutter-based mobile application",
     type: "project",
     description:
-      "Designed and developed a mobile platform connecting local musicians, venues, and bands — implementing authentication, profile management, real-time messaging, and a Firebase-backed cloud backend, with Agile development principles throughout.",
+      "Designed and developed a mobile platform connecting local musicians, venues, and bands, implementing authentication, profile management, real-time messaging, and a Firebase-backed cloud backend, with Agile development principles throughout.",
   },
   {
-    period: "Jun 2024 — Present",
+    period: "Jun 2024 to Present",
     title: "Quality Assurance Engineer",
     org: "Mitsubishi Electric Iconics Digital Solutions",
     type: "work",
     description:
-      "Working within an Agile software development environment, contributing to enterprise software delivery — functional, regression, and API testing with Postman and Azure DevOps, defect tracking through to resolution, release validation, and automating frontend testing on iOS & Android with Appium.",
+      "Working within an Agile software development environment, contributing to enterprise software delivery: functional, regression, and API testing with Postman and Azure DevOps, defect tracking through to resolution, release validation, and automating frontend testing on iOS & Android with Appium.",
   },
   {
     period: "Final year project",
@@ -59,7 +59,7 @@ const events: TimelineEvent[] = [
     org: "Python, FastAPI, C++, MySQL, Raspberry Pi 5, Flutter, Firebase",
     type: "project",
     description:
-      "Built a fall-detection and health-monitoring system for elderly users — a FastAPI backend processing sensor data from ESP32-S3 devices, and a Flutter app allowing users and caregivers to view health information and receive real-time alerts.",
+      "Built a fall-detection and health-monitoring system for elderly users: a FastAPI backend processing sensor data from ESP32-S3 devices, and a Flutter app allowing users and caregivers to view health information and receive real-time alerts.",
   },
 ];
 

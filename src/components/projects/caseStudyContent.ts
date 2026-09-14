@@ -20,8 +20,37 @@ export type ImpactItem = {
   description: string;
 };
 
+export type RepoLink = {
+  label: string;
+  url: string;
+};
+
+export type Figure = {
+  src: string;
+  alt: string;
+  caption: string;
+  /** Photographs fill their frame; screenshots and diagrams default to contain. */
+  fit?: "cover" | "contain";
+  /** Flip black-on-white line art so it sits in the dark theme like the other diagrams. */
+  tone?: "invert";
+};
+
+export type Gallery = {
+  kicker: string;
+  title: string;
+  /** "phone" renders tall 9:19.5 frames, "wide" renders 4:3 ones. */
+  layout: "phone" | "wide";
+  /** Columns at lg. Defaults to 4 for phone, 3 for wide; drop to 2 for dense diagrams. */
+  cols?: 2 | 3 | 4;
+  items: Figure[];
+};
+
 export type CaseStudyExtra = {
   tagline: string;
+  repos?: RepoLink[];
+  cover?: Figure[];
+  architectureDiagram?: Figure;
+  galleries?: Gallery[];
   stats: { value: string; label: string }[];
   architecture: ArchitectureLayer[];
   highlights: Highlight[];
@@ -35,11 +64,141 @@ export const caseStudyExtras: Record<string, CaseStudyExtra> = {
   "healthguard-pro": {
     tagline:
       "A final-year IoT project that pairs wearable-style fall and heart-rate sensors with an on-device facial recognition door camera, giving carers a live, remote view of an elderly relative's safety without taking away their independence.",
+    // TODO: replace the placeholder URLs with the real repositories.
+    repos: [
+      { label: "Mobile app", url: "https://github.com/your-username/healthguard-pro-app" },
+      { label: "Backend & IoT", url: "https://github.com/your-username/healthguard-pro-backend" },
+    ],
+    cover: [
+      {
+        src: "/images/healthguard-pro/app-dashboard.png",
+        alt: "HealthGuard Pro dashboard showing linked devices and the latest readings",
+        caption: "Dashboard",
+      },
+      {
+        src: "/images/healthguard-pro/app-device-linking.jpg",
+        alt: "Device linking screen with an input for a device ID and a list of linked devices",
+        caption: "Device linking",
+      },
+      {
+        src: "/images/healthguard-pro/app-live-feed-streaming.jpg",
+        alt: "Live camera feed from the door camera with mute and talkback controls",
+        caption: "Live feed",
+      },
+    ],
+    architectureDiagram: {
+      src: "/images/healthguard-pro/diagram-system-architecture.png",
+      alt: "System architecture diagram from sensors through the Raspberry Pi and Nginx to FastAPI, MySQL and the Flutter app",
+      caption:
+        "Sensors and camera feed the Pi; Nginx fronts FastAPI and the WebRTC signalling channel; the Flutter app talks to one domain.",
+    },
+    galleries: [
+      {
+        kicker: "Screens",
+        title: "The carer's view.",
+        layout: "phone",
+        items: [
+          {
+            src: "/images/healthguard-pro/app-dashboard.png",
+            alt: "Dashboard listing four devices and the most recent heart-rate and SpO2 readings",
+            caption: "Dashboard",
+          },
+          {
+            src: "/images/healthguard-pro/app-device-linking.jpg",
+            alt: "Device linking screen with an input for a device ID and a list of linked devices",
+            caption: "Linking a device by ID",
+          },
+          {
+            src: "/images/healthguard-pro/app-heart-rate-history.png",
+            alt: "Graph of recent heart rate, SpO2 and temperature readings for a monitored person",
+            caption: "Heart-rate and SpO₂ history",
+          },
+          {
+            src: "/images/healthguard-pro/app-live-feed-connecting.png",
+            alt: "Live camera feed screen waiting for the WebRTC video stream to connect",
+            caption: "Live feed, connecting",
+          },
+          {
+            src: "/images/healthguard-pro/app-live-feed-streaming.jpg",
+            alt: "Live camera feed screen showing video from the door camera with mute and talkback controls",
+            caption: "Live feed, streaming",
+          },
+        ],
+      },
+      {
+        kicker: "Hardware",
+        title: "Off-the-shelf parts, on a desk.",
+        layout: "wide",
+        items: [
+          {
+            src: "/images/healthguard-pro/hardware-enclosure.jpg",
+            alt: "The assembled sensor unit and camera module inside a black enclosure",
+            caption: "Assembled unit in its enclosure",
+            fit: "cover",
+          },
+          {
+            src: "/images/healthguard-pro/hardware-sensor-board.jpg",
+            alt: "M5 Stamp Pico wired to the MPU-6050 and MAX30102 breakout boards",
+            caption: "M5 Stamp Pico wired to both sensors",
+            fit: "cover",
+          },
+          {
+            src: "/images/healthguard-pro/hardware-battery-pack.jpg",
+            alt: "The sensor board mounted on top of a lithium polymer battery pack",
+            caption: "Battery-backed wearable prototype",
+            fit: "cover",
+          },
+          {
+            src: "/images/healthguard-pro/hardware-in-hand.jpg",
+            alt: "The finished sensor and battery assembly held in one hand for scale",
+            caption: "Small enough to carry",
+            fit: "cover",
+          },
+          {
+            src: "/images/healthguard-pro/hardware-pi-camera-speaker.jpg",
+            alt: "Raspberry Pi 5 connected to the NoIR camera ribbon, a speaker and a microphone",
+            caption: "Pi 5 with camera, speaker and mic",
+            fit: "cover",
+          },
+          {
+            src: "/images/healthguard-pro/hardware-pi-breadboard.jpg",
+            alt: "Raspberry Pi 5 wired to a breadboard during development",
+            caption: "Breadboard stage",
+            fit: "cover",
+          },
+        ],
+      },
+      {
+        kicker: "Diagrams",
+        title: "How the pieces fit together.",
+        layout: "wide",
+        cols: 2,
+        items: [
+          {
+            src: "/images/healthguard-pro/diagram-sensor-wiring.png",
+            alt: "Wiring diagram mapping M5 Stamp Pico pins to the MPU-6050 and MAX30102 over I2C",
+            caption: "I2C wiring, Stamp Pico to both sensors",
+            tone: "invert",
+          },
+          {
+            src: "/images/healthguard-pro/diagram-webrtc-handshake.png",
+            alt: "Flow chart of the WebRTC handshake: SDP offer over secure WebSocket, STUN, ICE candidates, then media streaming",
+            caption: "WebRTC handshake, offer to first frame",
+          },
+          {
+            src: "/images/healthguard-pro/diagram-database-schema.png",
+            alt: "Entity relationship diagram of the seven MySQL tables including the device-user link table",
+            caption: "Seven tables, foreign keys throughout",
+            tone: "invert",
+          },
+        ],
+      },
+    ],
     stats: [
       { value: "6", label: "system layers, sensor to mobile app" },
       { value: "17", label: "REST API endpoints, JWT + device-key secured" },
       { value: "30%", label: "of over-65s fall at least once a year (WHO)" },
-      { value: "100%", label: "on-device facial recognition — no cloud upload" },
+      { value: "100%", label: "on-device facial recognition, no cloud upload" },
     ],
     architecture: [
       {
@@ -64,13 +223,13 @@ export const caseStudyExtras: Record<string, CaseStudyExtra> = {
         name: "Backend layer",
         tech: "FastAPI (Python, async)",
         description:
-          "The only service allowed to touch the database — validates every payload against a typed data model, authenticates via JWT (users) or a device API key (hardware), and runs a background worker that turns fall readings into alerts.",
+          "It's the only service allowed to touch the database. It validates every payload against a typed data model, authenticates via JWT (users) or a device API key (hardware), and runs a background worker that turns fall readings into alerts.",
       },
       {
         name: "Database layer",
         tech: "MySQL · SQLAlchemy",
         description:
-          "Seven relational tables, including a many-to-many device–user link table, with foreign keys and timestamps enforcing data integrity end to end.",
+          "Seven relational tables, including a many-to-many device-user link table, with foreign keys and timestamps enforcing data integrity end to end.",
       },
       {
         name: "Application layer",
@@ -88,7 +247,7 @@ export const caseStudyExtras: Record<string, CaseStudyExtra> = {
       {
         title: "Resilient heart-rate sensing",
         description:
-          "1Hz sampling with duplicate-reading suppression, rejection of clearly invalid values, and an automatic soft-reset after 40 consecutive failed reads — the sensor recovers from a bad state on its own instead of needing a manual power cycle.",
+          "1Hz sampling with duplicate-reading suppression, rejection of clearly invalid values, and an automatic soft-reset after 40 consecutive failed reads. The sensor recovers from a bad state on its own instead of needing a manual power cycle.",
       },
       {
         title: "Facial recognition, rebuilt for the hardware",
@@ -114,21 +273,21 @@ export const caseStudyExtras: Record<string, CaseStudyExtra> = {
       { name: "Integration", count: 6, note: "device linking, live feed, login, talkback, readings" },
     ],
     evaluation: [
-      "Fall detection relies on tuned thresholds rather than a trained classifier — reliable for typical elderly movement, but a gyro-assisted or ML-based model would cut false positives further.",
+      "Fall detection relies on tuned thresholds rather than a trained classifier; it's reliable for typical elderly movement, but a gyro-assisted or ML-based model would cut false positives further.",
       "Swapping the planned CNN for Haar Cascade + face_recognition traded a little accuracy in poor lighting or awkward angles for something that actually runs in real time on the hardware available.",
-      "The mobile app polls the API rather than receiving push updates — fine at current latency, but real-time push notifications would be a meaningful next step.",
+      "The mobile app polls the API rather than receiving push updates; that's fine at current latency, but real-time push notifications would be a meaningful next step.",
       "Everything depends on a stable home Wi-Fi connection, which isn't guaranteed for every household this system is meant to help.",
     ],
     impact: [
       {
         title: "Societal",
         description:
-          "Faster response to falls thanks to the alerts pipeline, and a way for carers to step back without stepping away — supporting independent living instead of replacing it.",
+          "Faster response to falls thanks to the alerts pipeline, and a way for carers to step back without stepping away, supporting independent living instead of replacing it.",
       },
       {
         title: "Industrial",
         description:
-          "Built on affordable, off-the-shelf hardware with a horizontally scalable backend, so cost isn't the barrier to adoption — reliable home internet is the bigger one.",
+          "Built on affordable, off-the-shelf hardware with a horizontally scalable backend, so cost isn't the barrier to adoption; reliable home internet is the bigger one.",
       },
       {
         title: "Technical",
@@ -144,10 +303,141 @@ export const caseStudyExtras: Record<string, CaseStudyExtra> = {
   },
   "black-country-beats": {
     tagline:
-      "A cross-platform Flutter app that gives independent artists and music venues in the Black Country a shared space to find each other, message directly, and turn conversations into booked gigs — replacing scattered social-media DMs with one dedicated platform.",
+      "A cross-platform Flutter app that gives independent artists and music venues in the Black Country a shared space to find each other, message directly, and turn conversations into booked gigs, replacing scattered social-media DMs with one dedicated platform.",
+    cover: [
+      {
+        src: "/images/black-country-beats/app-home.png",
+        alt: "Black Country Beats home screen with latest news, quick search and recent messages",
+        caption: "Home",
+      },
+      {
+        src: "/images/black-country-beats/app-search-results.jpg",
+        alt: "Search results showing matching artist profiles as image cards",
+        caption: "Search results",
+      },
+      {
+        src: "/images/black-country-beats/app-public-profile.jpg",
+        alt: "Public profile for an artist with rating, follow and message buttons",
+        caption: "Public profile",
+      },
+    ],
+    galleries: [
+      {
+        kicker: "Screens",
+        title: "The shipped app.",
+        layout: "phone",
+        items: [
+          {
+            src: "/images/black-country-beats/app-login.jpg",
+            alt: "Login screen with email and password fields plus Google, Facebook and Apple sign-in buttons",
+            caption: "Sign in",
+          },
+          {
+            src: "/images/black-country-beats/app-register.jpg",
+            alt: "Registration screen collecting username, email and password",
+            caption: "Register",
+          },
+          {
+            src: "/images/black-country-beats/app-home.png",
+            alt: "Home screen showing latest news articles, quick search chips and latest messages",
+            caption: "Home",
+          },
+          {
+            src: "/images/black-country-beats/app-search.png",
+            alt: "Search screen prompting for three or more characters or a filter",
+            caption: "Search",
+          },
+          {
+            src: "/images/black-country-beats/app-search-results.jpg",
+            alt: "Search results showing two matching artist profiles as image cards",
+            caption: "Results",
+          },
+          {
+            src: "/images/black-country-beats/app-public-profile.jpg",
+            alt: "Public profile for TheMarkBlackBand with rating, follow and message buttons, location, genre and price",
+            caption: "A public profile",
+          },
+          {
+            src: "/images/black-country-beats/app-chat-thread.png",
+            alt: "One-to-one chat thread with messages delivered over Socket.IO",
+            caption: "Chat thread",
+          },
+          {
+            src: "/images/black-country-beats/app-profile-map.jpg",
+            alt: "Embedded Google map with a pin on a geocoded profile address in Wolverhampton",
+            caption: "Address geocoded to a map",
+          },
+        ],
+      },
+      {
+        kicker: "Design",
+        title: "Mockups the build was measured against.",
+        layout: "wide",
+        items: [
+          {
+            src: "/images/black-country-beats/mockup-auth-screens.jpg",
+            alt: "Three mockup screens covering log in and the two registration steps",
+            caption: "Auth flow",
+          },
+          {
+            src: "/images/black-country-beats/mockup-home-and-search.png",
+            alt: "Mockups of the home feed and the empty search state side by side",
+            caption: "Home and search",
+          },
+          {
+            src: "/images/black-country-beats/mockup-search-filters.jpg",
+            alt: "Mockup of the search filter sheet with profile type, genre, rating, price and member count",
+            caption: "Filter sheet",
+          },
+          {
+            src: "/images/black-country-beats/mockup-search-results.jpg",
+            alt: "Mockups of search results in grid and list layouts",
+            caption: "Results, grid and list",
+          },
+          {
+            src: "/images/black-country-beats/mockup-venue-profile.jpg",
+            alt: "Mockup of a venue profile with rating, details and posts",
+            caption: "Venue profile",
+          },
+          {
+            src: "/images/black-country-beats/mockup-messaging.png",
+            alt: "Mockups of the messaging home, new message sheet and a chat thread",
+            caption: "Messaging",
+          },
+          {
+            src: "/images/black-country-beats/mockup-watch-notifications.jpg",
+            alt: "Apple Watch mockups showing new message and post like notifications",
+            caption: "Watch notifications, scoped out",
+          },
+        ],
+      },
+      {
+        kicker: "Diagrams",
+        title: "The model behind it.",
+        layout: "wide",
+        cols: 2,
+        items: [
+          {
+            src: "/images/black-country-beats/diagram-use-case.png",
+            alt: "Use case diagram covering solo artist, band member, user and venue owner actors",
+            caption: "Use cases across four actor types",
+          },
+          {
+            src: "/images/black-country-beats/diagram-class.png",
+            alt: "Class diagram of the app's domain model",
+            caption: "Domain model",
+          },
+          {
+            src: "/images/black-country-beats/diagram-erd.jpg",
+            alt: "Entity relationship diagram of the Firestore collections and their links",
+            caption: "Firestore collections and links",
+          },
+        ],
+      },
+    ],
     stats: [
-      { value: "3", label: "account types — Band, Solo Artist, Venue" },
-      { value: "2", label: "sign-in methods — email/password & Google" },
+      { value: "3", label: "account types: Band, Solo Artist, Venue" },
+      { value: "2", label: "sign-in methods: email/password & Google" },
       { value: "5", label: "Firestore collections powering the app" },
       { value: "Live", label: "presence & chat via Socket.IO + Firestore" },
     ],
@@ -168,7 +458,7 @@ export const caseStudyExtras: Record<string, CaseStudyExtra> = {
         name: "Real-time messaging layer",
         tech: "Node.js · Socket.IO",
         description:
-          "A Socket.IO server delivers chat messages instantly, while Firestore tracks chat metadata — last message, per-user unread counts, and a live isOnline flag that drives the presence dot next to followed users.",
+          "A Socket.IO server delivers chat messages instantly, while Firestore tracks chat metadata: last message, per-user unread counts, and a live isOnline flag that drives the presence dot next to followed users.",
       },
       {
         name: "Data layer",
@@ -187,17 +477,17 @@ export const caseStudyExtras: Record<string, CaseStudyExtra> = {
       {
         title: "Firebase-first identity & data",
         description:
-          "SQLite and Firebase were weighed directly against each other for persistence. Firebase won because Auth and Firestore share one SDK — Google Sign-In, account creation, and real-time profile updates all come for free — and a project this size will never reach the usage tier where its pricing bites.",
+          "SQLite and Firebase were weighed directly against each other for persistence. Firebase won because Auth and Firestore share one SDK (Google Sign-In, account creation, and real-time profile updates all come for free), and a project this size will never reach the usage tier where its pricing bites.",
       },
       {
         title: "Presence-aware messaging, hybrid by design",
         description:
-          "Chat delivery runs over a dedicated Node.js Socket.IO server for instant messages, while Firestore separately tracks unread counts per user and an isOnline flag on each profile — so the messaging home page can show who's currently online without polling.",
+          "Chat delivery runs over a dedicated Node.js Socket.IO server for instant messages, while Firestore separately tracks unread counts per user and an isOnline flag on each profile, so the messaging home page can show who's currently online without polling.",
       },
       {
         title: "Search that respects context",
         description:
-          "searchPublicProfiles() combines free-text matching (3+ characters) with structured filters — genre, profile type, minimum rating, max price, member count — in a single Firestore query, and always excludes the logged-in user's own profile from their own results.",
+          "searchPublicProfiles() combines free-text matching (3+ characters) with structured filters (genre, profile type, minimum rating, max price, member count) in a single Firestore query, and always excludes the logged-in user's own profile from their own results.",
       },
       {
         title: "Social graph with atomic counters",
@@ -207,11 +497,11 @@ export const caseStudyExtras: Record<string, CaseStudyExtra> = {
       {
         title: "Address-to-map, gracefully",
         description:
-          "Profile locations are stored as plain text and geocoded on demand via the geocoding package, opening the embedded map only on a successful match — with a clear error message, not a crash, when a location can't be found.",
+          "Profile locations are stored as plain text and geocoded on demand via the geocoding package, opening the embedded map only on a successful match, with a clear error message, not a crash, when a location can't be found.",
       },
     ],
     evaluation: [
-      "Posts and Calendar integration were both scoped in the original proposal but cut under time pressure to prioritise the messaging system — the platform currently has no way for users to broadcast updates outside of direct messages.",
+      "Posts and Calendar integration were both scoped in the original proposal but cut under time pressure to prioritise the messaging system. The platform currently has no way for users to broadcast updates outside of direct messages.",
       "The app talks to Firestore directly from the client for almost everything; a dedicated API layer in front of it would give far more control over validation and access rules than Firestore's own rule system alone.",
       "Location-based discovery (finding artists or venues nearest to you) never made it in, so the search page can filter by genre and rating but not by distance.",
       "Push notifications were left out largely due to added complexity on iOS, so users only see new messages when they open the app.",
@@ -225,7 +515,7 @@ export const caseStudyExtras: Record<string, CaseStudyExtra> = {
       {
         title: "For venues",
         description:
-          "A searchable, filterable pool of local bands and solo artists — by genre, rating, and price — for booking acts without chasing contacts across multiple platforms.",
+          "A searchable, filterable pool of local bands and solo artists (by genre, rating, and price) for booking acts without chasing contacts across multiple platforms.",
       },
       {
         title: "For the scene",

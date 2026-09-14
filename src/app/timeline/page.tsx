@@ -4,7 +4,7 @@ import Timeline from "@/components/timeline/Timeline";
 import Footer from "@/components/shared/Footer";
 
 export const metadata: Metadata = {
-  title: "Timeline — Joel Blackham",
+  title: "Timeline · Joel Blackham",
   description: "Joel Blackham's educational and industry timeline.",
 };
 

@@ -1,10 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence, type PanInfo } from "framer-motion";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import type { Project } from "@/generated/prisma/client";
+import SourceDropdown from "@/components/shared/SourceDropdown";
+import { caseStudyExtras } from "@/components/projects/caseStudyContent";
 
 const slideVariants = {
   enter: (direction: number) => ({
@@ -38,6 +41,10 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
   };
 
   const project = projects[index];
+  const extra = caseStudyExtras[project.slug];
+  const cover = extra?.cover;
+  const repos =
+    extra?.repos ?? (project.githubUrl ? [{ label: "Source on GitHub", url: project.githubUrl }] : []);
 
   return (
     <motion.section
@@ -52,7 +59,7 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
         <div>
           <h6 className="mb-3.5 text-accent">Selected work</h6>
           <h2 className="m-0 max-w-[22ch] text-h2 tracking-tight text-foreground sm:text-h2-lg">
-            {projects.length === 1 ? "One project" : `${projects.length} projects`}, written up properly.
+            My Project Work so far...
           </h2>
         </div>
 
@@ -97,19 +104,30 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
             className="grid grid-cols-1 items-center gap-8 pb-10 sm:grid-cols-[1.15fr_1fr] sm:gap-12 sm:pb-14"
           >
             <div
-              className="overflow-hidden rounded-2xl"
-              style={{ background: "var(--color-surface)", boxShadow: "var(--shadow-md)" }}
+              className="plate plate-stage relative grid aspect-16/10 place-items-center"
+              style={{ boxShadow: "var(--shadow-md)" }}
             >
-              <div
-                className="grid aspect-16/10 place-items-center"
-                style={{
-                  backgroundColor: "var(--color-surface)",
-                  backgroundImage:
-                    "repeating-linear-gradient(135deg, rgba(233,233,237,0.055) 0 10px, transparent 10px 20px)",
-                }}
-              >
-                <span className="caption-mono">{project.title} — screenshot</span>
-              </div>
+              {cover?.length ? (
+                <div className="flex h-full w-full items-center justify-center gap-4 px-6 py-6 sm:gap-5 sm:px-8 sm:py-7">
+                  {cover.map((shot, i) => (
+                    <div
+                      key={shot.src}
+                      className={`relative min-w-0 flex-1 ${i === 1 ? "h-full" : "h-[88%]"}`}
+                    >
+                      <Image
+                        src={shot.src}
+                        alt={shot.alt}
+                        fill
+                        sizes="(min-width: 640px) 200px, 30vw"
+                        className="object-contain select-none [filter:drop-shadow(0_12px_22px_rgba(0,0,0,0.5))]"
+                        draggable={false}
+                      />
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <span className="caption-mono">{project.title} · screenshot</span>
+              )}
             </div>
 
             <div>
@@ -125,7 +143,7 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
                 {project.shortDescription}
               </p>
               <p className="m-0 mb-5 text-meta leading-[1.6] text-foreground/55">
-                Solo developer — university project
+                Solo developer, university project
               </p>
               <div className="mb-6 flex flex-wrap gap-1.5">
                 {project.techStack.map((tech) => (
@@ -138,16 +156,7 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
                 <Link className="btn btn-primary px-4 py-2 text-sm" href={`/projects/${project.slug}`}>
                   Read the case study
                 </Link>
-                {project.githubUrl && (
-                  <a
-                    className="btn btn-secondary px-4 py-2 text-sm"
-                    href={project.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Source on GitHub
-                  </a>
-                )}
+                <SourceDropdown repos={repos} variant="secondary" placement="top" />
               </div>
             </div>
           </motion.article>

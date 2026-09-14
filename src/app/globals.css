@@ -120,6 +120,96 @@
   border-radius: var(--radius-md);
 }
 
+/*
+ * Image frames. Same surface, radius and shadow as .card so a plate reads as a
+ * member of the same family. Purely visual on its own — add .plate-interactive
+ * for the accent border and lift, and only where the frame holds a single image
+ * that is itself the hover target. On a composite (several screenshots in one
+ * frame) the shared hover scales all of them at once and reads as a glitch.
+ */
+.plate {
+  background: var(--color-surface);
+  border: 1px solid color-mix(in srgb, var(--color-text) 8%, transparent);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+/* Screenshots read better lifted off a stage than floating on flat surface. */
+.plate-stage {
+  background: linear-gradient(160deg, var(--color-section), var(--color-section-glow));
+}
+
+.plate-interactive {
+  transition: border-color 0.25s ease;
+}
+
+.plate-interactive:hover {
+  border-color: color-mix(in srgb, var(--color-accent) 45%, transparent);
+}
+
+.plate-interactive img {
+  transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+.plate-interactive:hover img {
+  transform: scale(1.03);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .plate-interactive img,
+  .plate-interactive:hover img {
+    transition: none;
+    transform: none;
+  }
+}
+
+/*
+ * Brand-mark tiles in the Stack grid. Marks sit muted by default so the grid
+ * reads as one texture, and lift into their own brand colour on hover. The
+ * colour comes from --brand, set per tile.
+ */
+.logo-tile {
+  background: var(--color-surface);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  transition: border-color 0.25s ease, background-color 0.25s ease;
+}
+
+.logo-tile svg {
+  color: color-mix(in srgb, var(--color-text) 52%, transparent);
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+
+.logo-tile:hover {
+  border-color: color-mix(in srgb, var(--brand) 45%, transparent);
+}
+
+.logo-tile:hover svg {
+  color: var(--brand);
+  transform: translateY(-2px);
+}
+
+.logo-tile:hover span {
+  color: color-mix(in srgb, var(--color-text) 85%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-tile:hover svg {
+    transform: none;
+  }
+}
+
+.menu-item {
+  display: block;
+  border-radius: 8px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.menu-item:hover,
+.menu-item:focus-visible {
+  background: color-mix(in srgb, var(--color-text) 8%, transparent);
+}
+
 .elev-sm {
   box-shadow: 0 10px 24px -16px rgba(0, 0, 0, 0.5);
 }

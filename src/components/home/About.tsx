@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion, type Variants } from "framer-motion";
 
 const staggerContainer: Variants = {
@@ -30,12 +31,10 @@ export default function About({ inView }: { inView: boolean }) {
             className="grid aspect-4/5 place-items-center overflow-hidden rounded-2xl"
             style={{
               backgroundColor: "var(--color-surface)",
-              backgroundImage:
-                "repeating-linear-gradient(135deg, rgba(233,233,237,0.055) 0 10px, transparent 10px 20px)",
               boxShadow: "var(--shadow-md)",
             }}
           >
-            <span className="caption-mono">portrait — dark background</span>
+            <Image src="/images/IMG_6302.jpeg" alt="Joel Blackham" width={400} height={500} className="h-auto w-full object-cover" />
           </div>
         </motion.div>
 
