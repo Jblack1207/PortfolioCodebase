@@ -7,7 +7,7 @@ import type { Project } from "@/generated/prisma/client";
 import ScrollToTop from "@/components/shared/ScrollToTop";
 import SourceDropdown from "@/components/shared/SourceDropdown";
 import Plate from "./Plate";
-import { caseStudyExtras } from "./caseStudyContent";
+import { caseStudyExtras, projectRepos } from "./caseStudyContent";
 
 const staggerContainer: Variants = {
   hidden: {},
@@ -35,8 +35,7 @@ function num(slug: Project["slug"]) {
 }
 export default function CaseStudy({ project }: { project: Project }) {
   const extra = caseStudyExtras[project.slug];
-  const repos =
-    extra?.repos ?? (project.githubUrl ? [{ label: "Source on GitHub", url: project.githubUrl }] : []);
+  const repos = projectRepos(project);
 
   return (
     <>

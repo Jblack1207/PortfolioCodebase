@@ -7,7 +7,7 @@ import { motion, AnimatePresence, type PanInfo } from "framer-motion";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import type { Project } from "@/generated/prisma/client";
 import SourceDropdown from "@/components/shared/SourceDropdown";
-import { caseStudyExtras } from "@/components/projects/caseStudyContent";
+import { caseStudyExtras, projectRepos } from "@/components/projects/caseStudyContent";
 
 const slideVariants = {
   enter: (direction: number) => ({
@@ -43,8 +43,7 @@ export default function ProjectsSection({ projects }: { projects: Project[] }) {
   const project = projects[index];
   const extra = caseStudyExtras[project.slug];
   const cover = extra?.cover;
-  const repos =
-    extra?.repos ?? (project.githubUrl ? [{ label: "Source on GitHub", url: project.githubUrl }] : []);
+  const repos = projectRepos(project);
 
   return (
     <motion.section

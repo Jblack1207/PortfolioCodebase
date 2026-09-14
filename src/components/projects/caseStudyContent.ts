@@ -47,7 +47,12 @@ export type Gallery = {
 
 export type CaseStudyExtra = {
   tagline: string;
-  repos?: RepoLink[];
+  /*
+   * Labels for a project with two repositories, in [githubUrl, liveUrl] order.
+   * Presence of this field is what opts a project into reading liveUrl as a
+   * second repo — without it liveUrl keeps its normal meaning and is ignored.
+   */
+  repoLabels?: [string, string];
   cover?: Figure[];
   architectureDiagram?: Figure;
   galleries?: Gallery[];
@@ -64,11 +69,7 @@ export const caseStudyExtras: Record<string, CaseStudyExtra> = {
   "healthguard-pro": {
     tagline:
       "A final-year IoT project that pairs wearable-style fall and heart-rate sensors with an on-device facial recognition door camera, giving carers a live, remote view of an elderly relative's safety without taking away their independence.",
-    // TODO: replace the placeholder URLs with the real repositories.
-    repos: [
-      { label: "Mobile app", url: "https://github.com/your-username/healthguard-pro-app" },
-      { label: "Backend & IoT", url: "https://github.com/your-username/healthguard-pro-backend" },
-    ],
+    repoLabels: ["Backend & IoT", "Mobile app"],
     cover: [
       {
         src: "/images/healthguard-pro/app-dashboard.png",
@@ -531,3 +532,26 @@ export const caseStudyExtras: Record<string, CaseStudyExtra> = {
     ],
   },
 };
+
+/**
+ * A project's source links, read from the database. `githubUrl` is always the
+ * first; `liveUrl` is treated as a second repository only for projects that
+ * declare `repoLabels`.
+ */
+export function projectRepos(project: {
+  slug: string;
+  githubUrl: string | null;
+  liveUrl: string | null;
+}): RepoLink[] {
+  const labels = caseStudyExtras[project.slug]?.repoLabels;
+  const links: RepoLink[] = [];
+
+  if (project.githubUrl) {
+    links.push({ label: labels?.[0] ?? "Source on GitHub", url: project.githubUrl });
+  }
+  if (labels && project.liveUrl) {
+    links.push({ label: labels[1], url: project.liveUrl });
+  }
+
+  return links;
+}
