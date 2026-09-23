@@ -44,7 +44,7 @@ export default function About({ inView }: { inView: boolean }) {
             Hi - I&rsquo;m Joel.
           </h2>
           <p className="m-0 mb-5 max-w-[58ch] text-body leading-[1.65] text-foreground/78">
-            I&rsquo;m a BSc (Hons) Computer Science graduate from Birmingham City University. Currently I work as a QA Engineer for Mitubishi Electric Iconics Digital Solutions, but am looking to transition into a Software Engineering / Development role.
+            I&rsquo;m a BSc (Hons) Computer Science graduate from Birmingham City University. Currently I work as a QA Engineer for Mitsubishi Electric Iconics Digital Solutions, but am looking to transition into a Software Engineering / Development role.
           </p>
           <p className="m-0 mb-8 max-w-[58ch] text-body leading-[1.65] text-foreground/78">
             I&rsquo;m hugely passionate about technology and software development, and I&rsquo;m always looking to learn new skills and improve my knowledge to adjust to any job role or industry changes.

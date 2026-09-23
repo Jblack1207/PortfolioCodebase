@@ -5,7 +5,7 @@ import Footer from "@/components/shared/Footer";
 
 export const metadata: Metadata = {
   title: "Timeline · Joel Blackham",
-  description: "Joel Blackham's educational and industry timeline.",
+  description: "My educational and industry timeline.",
 };
 
 export default function TimelinePage() {
